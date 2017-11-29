@@ -1,0 +1,25 @@
+Mean =0.0 Std dev = 0.0 
+ Mean =0.0 Std dev = 0.0 
+ Mean =0.0 Std dev = 0.0 
+ Mean =0.0 Std dev = 0.0 
+ Mean =0.0 Std dev = 0.0 
+ Mean =0.0 Std dev = 0.0 
+ Mean =0.000244444444444 Std dev = 0.0997014778795 
+ Mean =0.0106111111111 Std dev = 0.717579390799 
+ Mean =-0.00571111111111 Std dev = 1.31436323615 
+ Mean =0.0563777777778 Std dev = 1.58815021384 
+ Mean =0.0091 Std dev = 1.6847499554 
+ Mean =-0.0909555555556 Std dev = 1.77822338874 
+ Mean =-0.0446555555556 Std dev = 1.7887938187 
+ Mean =-0.0287333333333 Std dev = 1.7317286662 
+ Mean =0.0678555555556 Std dev = 1.61792575067 
+ Mean =0.0385777777778 Std dev = 1.41463869732 
+ Mean =-0.0208888888889 Std dev = 0.980716908349 
+ Mean =0.00311111111111 Std dev = 0.290963321264 
+ Mean =0.0 Std dev = 0.0 
+ Mean =0.0 Std dev = 0.0 
+ Mean =0.0 Std dev = 0.0 
+ Mean =0.0 Std dev = 0.0 
+ Mean =0.0 Std dev = 0.0 
+ Mean =0.0 Std dev = 0.0 
+ 
