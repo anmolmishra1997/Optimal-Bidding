@@ -2,7 +2,7 @@ def cost(demand, solar, price, bid_quantity, bid_price):
 	'''
 	All the parameters here are in NumPy array.
 	This function evaluates cost
-	To use this function in other Python code, use from cost_calculation import cost
+	To use this function in other Python code, use `from cost_calculation import cost`
 	'''
 	cost = 0
 	battery = 0
