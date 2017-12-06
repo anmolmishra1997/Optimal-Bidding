@@ -13,7 +13,7 @@ solar_train_pred = pd.read_csv('Solar_Train_pred.csv', header=None).as_matrix()
 mu_total = []
 sigma_total = []
 
-for i in range(0,24):
+for i in range(12,13):
 	datos = solar_train[:,i] - solar_train_pred[:,i]
 
 	# best fit of data
@@ -35,8 +35,9 @@ for i in range(0,24):
 	plt.grid(True)
 
 	plt.show()
-
+'''
 x = open('data_obs_solar.txt', 'w')
 for j in range(0,24):
 	x.write("Mean =" + str(mu_total[j]) + " Std dev = " + str(sigma_total[j]) + " \n ")
 x.close()
+'''
