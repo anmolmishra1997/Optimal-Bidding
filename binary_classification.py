@@ -31,18 +31,19 @@ def charge_discharge(Price):
 	boolean = Price < np.median(Price)
 	decision = boolean.astype(int)
 	count=0
-	for i in range(0, decision.size):
-		if decision[i] == 1:
-			count += 1
-		if decision[i] == 0:
-			count -= 1
-			decision[i] = -1
-		if count > 5:
-			count -= 1
-			decision[i] = 0
-		if count < 0:
-			count += 1
-			decision[i] = 0
+	for i in range(0, decision.shape[0]):
+		for j in range(0, decision.shape[1]):
+			if decision[i, j] == 1:
+				count += 1
+			if decision[i, j] == 0:
+				count -= 1
+				decision[i, j] = -1
+			if count > 5:
+				count -= 1
+				decision[i, j] = 0
+			if count < 0:
+				count += 1
+				decision[i, j] = 0
 	return decision
 
-print charge_discharge(np.array([1,5,4,3,7,6,3,5,6,9,1]))
+print charge_discharge(np.array([[1,5,4,3,7],[6,3,5,6,9]]))
