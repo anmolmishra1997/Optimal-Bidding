@@ -3,8 +3,6 @@ from binary_classification import charge_discharge
 from cost_calulation import cost
 import pandas as pd
 
-x_values_price = np.array([2.08, 2.18, 2.2, 2.4, 2.44, 2.31, 2.16, 2.35, 2.26, 2.25, 2.48, 2.11, 2.35, 2.33, 2.61, 2.28, 2.26, 2.37, 2.55, 2.17, 2.08, 2.37, 2.09, 2.13])
-
 with open('bid_price_prediction.txt') as f:
 	content = f.readlines()
 
