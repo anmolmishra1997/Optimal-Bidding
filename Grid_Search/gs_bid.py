@@ -95,4 +95,4 @@ x_values_price = np.mean(np.asarray(x_values_price), axis=0)
 
 final = np.vstack((sigma_qty, sigma_price, x_values_qty_charging, x_values_qty_discharging, x_values_qty_neutral, x_values_price))
 
-np.savetxt('test_batch50.txt', final, fmt='%.3e')
+np.savetxt('test_all_50_initial.txt', final, fmt='%.3e')

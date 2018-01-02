@@ -49,10 +49,14 @@ price_test_pred = pd.read_csv('Price_LB_pred.csv', header=None).as_matrix()
 bid_price = np.zeros(price_test_pred.shape)
 bid_quantity = np.zeros(price_test_pred.shape)
 charge_decision = charge_discharge(price_test_pred)
+charge_decision = np.zeros(price_test_pred.shape)
 
 for hour in range(0, 24):
 	bid_price[:, hour] = (price_test_pred[:, hour] + x_values_price[hour]*std_price[hour]).clip(max=7.)
 
+#charge_decision = charge_discharge(bid_price)
+
+for hour in range(0, 24):
 	charge = (charge_decision[:, hour] > 0).astype(np.int) * (5 + x_values_charging[hour]*std_demand_quantity[hour])
 	discharge = (charge_decision[:, hour] < 0).astype(np.int) * ((-4) + x_values_discharging[hour]*std_demand_quantity[hour])
 	neutral = (charge_decision[:, hour] == 0).astype(np.int) * (x_values_neutral[hour]*std_demand_quantity[hour])
