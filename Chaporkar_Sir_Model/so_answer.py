@@ -1,7 +1,10 @@
 import numpy as np
 from another import black_box
 from cost_calculation import cost
+from multiprocessing import Pool, freeze_support, cpu_count
 import pandas as pd
+
+def black_box_and_cost_combined()
 
 x_values = np.arange(-3, +4, 0.2)
 y_values = np.arange(-2, +4, 0.2)
@@ -37,8 +40,7 @@ for block in range(17):
 
 				quantity_train_pred[:, hour] = quantity_train_pred[:, hour] + x_values[i] * sigma_quantity
 				price_train_pred[:, hour] = price_train_pred[:, hour] + y_values[j] * sigma_price
-			temp, quantity_star = black_box(price_train_pred.ravel(), quantity_train_pred.ravel())
-			price_chart[i, j] =  cost(demand_train, solar_train, price_train, quantity_star, price_train_pred)
+			price_chart[i, j] =  cost(demand_train, solar_train, price_train, black_box(price_train_pred.ravel(), quantity_train_pred.ravel())[1], price_train_pred)
 	#ERROR FUNCTION GOES HERE
 	price_diff_chart = price_chart - min_cost
 	error_chart += price_diff_chart
@@ -68,12 +70,8 @@ for hour in range(24):
 temp, quantity_star = black_box(price_train_pred.ravel(), quantity_train_pred.ravel())
 
 print cost(demand_train, solar_train, price_train, quantity_star, price_train_pred)
-print cost(demand_train, solar_train, price_train, black_box(price_train_pred, demand_train - solar_train)[1], price_train)
-
-'''
 temp1 = np.reshape(price_train_pred, (np.product(price_train_pred.shape), 1))
 temp2 = np.reshape(quantity_star, (np.product(quantity_star.shape), 1))
 final = np.concatenate((temp1, temp2), axis=1)
 full_final = pd.DataFrame(final)
 full_final.to_csv('7zz.csv', index=False)
-'''

@@ -3,7 +3,7 @@ from another import black_box
 from cost_calculation import cost
 import pandas as pd
 
-block = 1
+block = 4
 
 x_values = np.arange(-3, +4, 0.2)
 y_values = np.arange(-2, +4, 0.2)

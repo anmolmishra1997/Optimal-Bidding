@@ -3,10 +3,10 @@ from another import black_box
 from cost_calculation import cost
 import pandas as pd
 
-block = 1
+block = 2
 
-x_values = np.arange(-3, +4, 0.2)
-y_values = np.arange(-2, +4, 0.2)
+x_values = np.arange(-5, +5, 0.1)
+y_values = np.arange(-5, +5, 0.1)
 
 with open('extracted_sigma.txt') as f:
 	content = f.readlines()
@@ -35,7 +35,7 @@ for i in range(x_values.size):
 			quantity_train_pred[:, hour] = quantity_train_pred[:, hour] + x_values[i] * sigma_quantity
 			price_train_pred[:, hour] = price_train_pred[:, hour] + y_values[j] * sigma_price
 		temp, quantity_star = black_box(price_train_pred.ravel(), quantity_train_pred.ravel())
-		price_chart[i, j] =  cost(demand_train, solar_train, price_train, quantity_star.reshape(quantity_train_pred.shape), price_train_pred)
+		price_chart[i, j] =  cost(demand_train, solar_train, price_train, quantity_train_pred, price_train_pred)
 #ERROR FUNCTION GOES HERE
 price_diff_chart = price_chart - min_cost
 
