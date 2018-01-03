@@ -39,6 +39,8 @@ for block in range(18):
 		(mu_error_quantity, sigma_error_quantity) = norm.fit(error_data_quantity)
 		(mu_error_price, sigma_error_price) = norm.fit(error_data_price)
 
+		print sigma_error_price, sigma_error_quantity
+
 		for i in range(x_values.size):
 			for j in range(y_values.size):
 				my_bid_quantity_charging = (demand_train_pred[:, hour] - solar_train_pred[:, hour] + x_values[i]*sigma_error_quantity + 5).clip(min=0)

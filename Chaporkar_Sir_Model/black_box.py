@@ -19,21 +19,17 @@ def find_lowest_cost(price, quantity, level):
 	# IF NOT LAST LEVEL
 	if level != 0:
 		last_price_column, bid_quantity[:, 1:] = find_lowest_cost(price[1:], quantity[1:], level-1)
-		print last_price_column
+		print(last_price_column)
 		ans = np.full(26, np.inf)
 		for i in range(26):
 			temp = []
 			for j in range(26):
 				temp.append(last_price_column[j] + cost_one_battery_state_to_another(i, j, price[0], quantity[0]))
 			index, ans[i] = min(enumerate(temp), key=operator.itemgetter(1))
-			bid_quantity[i, 0] = index + quantity[0] - i
+			bid_quantity[i, 0] = index  - i
 		return ans, bid_quantity
 	# IF LAST LEVEL
 	if level == 0:
 		ans = np.full(26, np.inf)
 		ans[0] = 0
 		return ans, np.array([])
-
-
-print find_lowest_cost(np.array([1, 1.2, 1.5, 1.1, 1.8, 0.8]), np.array([23, 26, 43, 21, 65, 32]), 6)
-print cost_one_battery_state_to_another(4,0,np.array([0.8]), np.array([32]))
