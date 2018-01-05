@@ -3,7 +3,7 @@ from scipy_optimize import charge_discharge
 import pandas as pd
 from another import black_box_quantity
 
-with open('test_600_initial_corrected.txt') as f:
+with open('test_900_iitm_corrected.txt') as f:
 	content = f.readlines()
 
 std_price = []
@@ -59,7 +59,7 @@ bid_price = np.zeros(price_test_pred.shape)
 bid_quantity = np.zeros(price_test_pred.shape)
 charge_decision = black_box_quantity(price_test_pred.ravel(), (demand_test_pred - solar_test_pred).ravel())
 #print charge_decision.shape
-print type(charge_decision)
+#print type(charge_decision)
 charge_decision = charge_decision.reshape(price_test_pred.shape)
 #charge_decision = np.zeros(price_test_pred.shape)
 

@@ -3,10 +3,10 @@ from scipy_optimize import charge_discharge
 import pandas as pd
 from another import black_box_quantity
 
-with open('temp.txt') as f:
+with open('temp1.txt') as f:
 	content_blocks = f.readlines()
 
-with open('test_900_block.txt') as f:
+with open('test_600_4_block.txt') as f:
 	content = f.readlines()
 
 std_price = []
@@ -18,7 +18,7 @@ x_values_neutral = []
 
 var = [std_demand_quantity, std_price, x_values_charging, x_values_discharging, x_values_neutral, x_values_price]
 for i in range(6):
-	for j in range(72):
+	for j in range(96):
 		var[i].append(float(content[i].split()[j]))
 print len(x_values_price)
 print std_price
@@ -35,7 +35,9 @@ bid_quantity = np.zeros(price_test_pred.shape)
 #print charge_decision.shape
 #print type(charge_decision)
 #charge_decision = charge_decision.reshape(price_test_pred.shape)
-charge_decision = np.zeros(price_test_pred.shape)
+#charge_decision = np.zeros(price_test_pred.shape)
+print "HII"
+print content_blocks
 
 for hour in range(0, 24):
 	print "HOUR ", hour
@@ -43,15 +45,18 @@ for hour in range(0, 24):
 	deviation_price = np.zeros(effective_demand.shape)
 	deviation_quantity = np.zeros(effective_demand.shape)
 	for foo in range(deviation_price.size):
-		if effective_demand[foo] <= float(content_blocks[3*hour]):
-			deviation_price[foo] = std_price[3*hour] * x_values_price[3*hour]
-			deviation_quantity[foo] = std_demand_quantity[3*hour] * x_values_neutral[3*hour]
-		if effective_demand[foo] > float(content_blocks[3*hour]) and effective_demand[foo] <= float(content_blocks[3*hour + 1]):
-			deviation_price[foo] = std_price[3*hour + 1] * x_values_price[3*hour + 1]
-			deviation_quantity[foo] = std_demand_quantity[3*hour + 1] * x_values_neutral[3*hour + 1]
-		if effective_demand[foo] > float(content_blocks[3*hour + 1]):
-			deviation_price[foo] = std_price[3*hour + 2] * x_values_price[3*hour + 2]
-			deviation_quantity[foo] = std_demand_quantity[3*hour + 2] * x_values_neutral[3*hour + 2]
+		if effective_demand[foo] <= float(content_blocks[3*hour].split()[-1]):
+			deviation_price[foo] = std_price[4*hour] * x_values_price[4*hour]
+			deviation_quantity[foo] = std_demand_quantity[4*hour] * x_values_neutral[3*hour]
+		if effective_demand[foo] > float(content_blocks[3*hour].split()[-1]) and effective_demand[foo] <= float(content_blocks[3*hour + 1].split()[-1]):
+			deviation_price[foo] = std_price[4*hour + 1] * x_values_price[4*hour + 1]
+			deviation_quantity[foo] = std_demand_quantity[4*hour + 1] * x_values_neutral[4*hour + 1]
+		if effective_demand[foo] > float(content_blocks[3*hour + 1].split()[-1]) and effective_demand[foo] <= float(content_blocks[3*hour + 2].split()[-1]):
+			deviation_price[foo] = std_price[4*hour + 2] * x_values_price[4*hour + 2]
+			deviation_quantity[foo] = std_demand_quantity[4*hour + 2] * x_values_neutral[4*hour + 2]
+		if effective_demand[foo] > float(content_blocks[3*hour + 2].split()[-1]):
+			deviation_price[foo] = std_price[4*hour + 3] * x_values_price[4*hour + 3]
+			deviation_quantity[foo] = std_demand_quantity[4*hour + 3] * x_values_neutral[4*hour + 3]
 
 	bid_price[:, hour] = price_test_pred[:, hour] + deviation_price
 	bid_quantity[:, hour] = demand_test_pred[:, hour] - solar_test_pred[:, hour] + deviation_quantity
@@ -67,7 +72,7 @@ for hour in range(0, 24):
 
 temp1 = np.reshape(bid_price, (np.product(bid_price.shape), 1))
 temp2 = np.reshape(bid_quantity, (np.product(bid_quantity.shape), 1))
-temp2 = np.reshape(black_box_quantity(temp1.ravel(), temp2.ravel())[1], (np.product(bid_quantity.shape), 1))
+#temp2 = np.reshape(black_box_quantity(temp1.ravel(), temp2.ravel())[1], (np.product(bid_quantity.shape), 1))
 final = np.concatenate((temp1, temp2), axis=1)
 full_final = pd.DataFrame(final)
-full_final.to_csv('7zzz.csv', index=False)
+full_final.to_csv('7zzz.csv', index=False, header=False)

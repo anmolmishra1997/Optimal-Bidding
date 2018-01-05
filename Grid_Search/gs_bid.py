@@ -11,12 +11,12 @@ x_values_qty_neutral = []
 x_values_price = []
 
 for block in range(1):
-	demand_train = pd.read_csv('Demand_Train.csv', header=None).as_matrix()[50*block:50*(block+12), :]
-	demand_train_pred = pd.read_csv('Demand_Train_pred.csv', header=None).as_matrix()[50*block:50*(block+12), :]
-	solar_train = pd.read_csv('Solar_Train.csv', header=None).as_matrix()[50*block:50*(block+12), :]
-	solar_train_pred = pd.read_csv('Solar_Train_pred.csv', header=None).as_matrix()[50*block:50*(block+12), :]
-	price_train = pd.read_csv('Price_Train.csv', header=None).as_matrix()[50*block:50*(block+12), :]
-	price_train_pred = pd.read_csv('Price_Train_pred.csv', header=None).as_matrix()[50*block:50*(block+12), :]
+	demand_train = pd.read_csv('Demand_Train.csv', header=None).as_matrix()[50*block:50*(block+18), :]
+	demand_train_pred = pd.read_csv('Demand_Train_pred.csv', header=None).as_matrix()[50*block:50*(block+18), :]
+	solar_train = pd.read_csv('Solar_Train.csv', header=None).as_matrix()[50*block:50*(block+18), :]
+	solar_train_pred = pd.read_csv('Solar_Train_pred.csv', header=None).as_matrix()[50*block:50*(block+18), :]
+	price_train = pd.read_csv('Price_Train.csv', header=None).as_matrix()[50*block:50*(block+18), :]
+	price_train_pred = pd.read_csv('Price_Train_pred.csv', header=None).as_matrix()[50*block:50*(block+18), :]
 
 	x_values = np.arange(-10, +10, 0.1)
 	y_values = np.arange(-10, +10, 0.1)
@@ -97,4 +97,4 @@ x_values_price = np.mean(np.asarray(x_values_price), axis=0)
 
 final = np.vstack((sigma_qty, sigma_price, x_values_qty_charging, x_values_qty_discharging, x_values_qty_neutral, x_values_price))
 
-np.savetxt('test_600_initial_corrected.txt', final, fmt='%.3e')
+np.savetxt('test_900_iitm_corrected.txt', final, fmt='%.3e')

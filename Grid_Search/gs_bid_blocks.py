@@ -13,19 +13,19 @@ x_values_price = []
 #THIRTY PERCENTILE
 #SIXTY PERCENTILE
 
-with open('temp.txt') as f:
+with open('temp1.txt') as f:
 	content = f.readlines()
 
 for big_block in range(1):
-	demand_train = pd.read_csv('Demand_Train.csv', header=None).as_matrix()[:900, :]
-	demand_train_pred = pd.read_csv('Demand_Train_pred.csv', header=None).as_matrix()[:900, :]
-	solar_train = pd.read_csv('Solar_Train.csv', header=None).as_matrix()[:900, :]
-	solar_train_pred = pd.read_csv('Solar_Train_pred.csv', header=None).as_matrix()[:900, :]
-	price_train = pd.read_csv('Price_Train.csv', header=None).as_matrix()[:900, :]
-	price_train_pred = pd.read_csv('Price_Train_pred.csv', header=None).as_matrix()[:900, :]
+	demand_train = pd.read_csv('Demand_Train.csv', header=None).as_matrix()[:600, :]
+	demand_train_pred = pd.read_csv('Demand_Train_pred.csv', header=None).as_matrix()[:600, :]
+	solar_train = pd.read_csv('Solar_Train.csv', header=None).as_matrix()[:600, :]
+	solar_train_pred = pd.read_csv('Solar_Train_pred.csv', header=None).as_matrix()[:600, :]
+	price_train = pd.read_csv('Price_Train.csv', header=None).as_matrix()[:600, :]
+	price_train_pred = pd.read_csv('Price_Train_pred.csv', header=None).as_matrix()[:600, :]
 
-	x_values = np.arange(-10, +10, 0.1)
-	y_values = np.arange(-10, +10, 0.1)
+	x_values = np.arange(-4, +4, 0.05)
+	y_values = np.arange(-4, +4, 0.05)
 	cost_charging = np.zeros((x_values.size, y_values.size))
 	cost_discharging = np.zeros((x_values.size, y_values.size))
 	cost_neutral = np.zeros((x_values.size, y_values.size))
@@ -49,12 +49,12 @@ for big_block in range(1):
 		sorted_effective_price_train = effective_price_train[np.argsort(effective_demand_train)]
 		sorted_effective_price_pred = effective_price_pred[np.argsort(effective_demand_train)]
 
-		list_effective_demand_train = np.split(sorted_effective_demand_train, np.searchsorted(sorted_effective_demand_train, np.array([float(content[3*hour]), float(content[3*hour+1])]), side='right'))
-		list_effective_demand_pred = np.split(sorted_effective_demand_pred, np.searchsorted(sorted_effective_demand_train, np.array([float(content[3*hour]), float(content[3*hour+1])]), side='right'))
-		list_effective_price_train = np.split(sorted_effective_price_train, np.searchsorted(sorted_effective_demand_train, np.array([float(content[3*hour]), float(content[3*hour+1])]), side='right'))
-		list_effective_price_pred = np.split(sorted_effective_price_pred, np.searchsorted(sorted_effective_demand_train, np.array([float(content[3*hour]), float(content[3*hour+1])]), side='right'))
+		list_effective_demand_train = np.split(sorted_effective_demand_train, np.searchsorted(sorted_effective_demand_train, np.array([float(content[3*hour].split()[-1]), float(content[3*hour+1].split()[-1]), float(content[3*hour+2].split()[-1])]), side='right'))
+		list_effective_demand_pred = np.split(sorted_effective_demand_pred, np.searchsorted(sorted_effective_demand_train, np.array([float(content[3*hour].split()[-1]), float(content[3*hour+1].split()[-1]), float(content[3*hour+2].split()[-1])]), side='right'))
+		list_effective_price_train = np.split(sorted_effective_price_train, np.searchsorted(sorted_effective_demand_train, np.array([float(content[3*hour].split()[-1]), float(content[3*hour+1].split()[-1]), float(content[3*hour+2].split()[-1])]), side='right'))
+		list_effective_price_pred = np.split(sorted_effective_price_pred, np.searchsorted(sorted_effective_demand_train, np.array([float(content[3*hour].split()[-1]), float(content[3*hour+1].split()[-1]), float(content[3*hour+2].split()[-1])]), side='right'))
 
-		for block in range(3):
+		for block in range(4):
 			error_data_quantity = list_effective_demand_train[block] - list_effective_demand_pred[block]
 			error_data_price = list_effective_price_train[block] - list_effective_price_pred[block]
 
@@ -112,4 +112,4 @@ x_values_price = np.mean(np.asarray(x_values_price), axis=0)
 
 final = np.vstack((sigma_qty, sigma_price, x_values_qty_charging, x_values_qty_discharging, x_values_qty_neutral, x_values_price))
 
-np.savetxt('test_900_block.txt', final, fmt='%.3e')
+np.savetxt('test_600_4_block.txt', final, fmt='%.3e')
