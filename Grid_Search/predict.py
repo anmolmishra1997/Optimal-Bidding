@@ -1,8 +1,9 @@
 import numpy as np
 from scipy_optimize import charge_discharge
 import pandas as pd
+from another import black_box_quantity
 
-with open('test_all_50_initial.txt') as f:
+with open('test_600_initial_corrected.txt') as f:
 	content = f.readlines()
 
 std_price = []
@@ -56,13 +57,14 @@ price_test_pred = pd.read_csv('Price_LB_pred.csv', header=None).as_matrix()
 
 bid_price = np.zeros(price_test_pred.shape)
 bid_quantity = np.zeros(price_test_pred.shape)
-#charge_decision = charge_discharge(price_test_pred)
+charge_decision = black_box_quantity(price_test_pred.ravel(), (demand_test_pred - solar_test_pred).ravel())
+#print charge_decision.shape
+print type(charge_decision)
+charge_decision = charge_decision.reshape(price_test_pred.shape)
 #charge_decision = np.zeros(price_test_pred.shape)
 
 for hour in range(0, 24):
 	bid_price[:, hour] = (price_test_pred[:, hour] + x_values_price[hour]*std_price[hour]).clip(max=7.)
-
-charge_decision = charge_discharge(bid_price)
 
 for hour in range(0, 24):
 	charge = (charge_decision[:, hour] > 0).astype(np.int) * (5 + x_values_charging[hour]*std_demand_quantity[hour])
@@ -71,8 +73,11 @@ for hour in range(0, 24):
 	bid_quantity[:, hour] = (demand_test_pred[:, hour] - solar_test_pred[:, hour] + charge + discharge + neutral).clip(min=0)
 
 
+
+
 temp1 = np.reshape(bid_price, (np.product(bid_price.shape), 1))
 temp2 = np.reshape(bid_quantity, (np.product(bid_quantity.shape), 1))
+#temp2 = np.reshape(black_box(temp1.ravel(), temp2.ravel())[1], (np.product(bid_quantity.shape), 1))
 final = np.concatenate((temp1, temp2), axis=1)
 full_final = pd.DataFrame(final)
 full_final.to_csv('7zzz.csv', index=False)

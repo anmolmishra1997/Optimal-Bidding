@@ -4,7 +4,7 @@ import operator
 def cost_one_battery_state_to_another(battery_state_left, battery_state_right, price, quantity):
 	if battery_state_right > battery_state_left + 5:
 		return np.inf
-	if battery_state_right < battery_state_left - 4:
+	if battery_state_right < battery_state_left - 5:
 		return np.inf
 	diff_states = battery_state_left - battery_state_right
 	# If diff_states greater than 0 DISCHARGING
@@ -12,7 +12,7 @@ def cost_one_battery_state_to_another(battery_state_left, battery_state_right, p
 	if diff_states <= 0:
 		return (np.abs(diff_states) + quantity) * price
 	if diff_states > 0:
-		return (-1*np.abs(diff_states) + quantity) * price
+		return (-0.8*np.abs(diff_states) + quantity) * price
 
 def find_lowest_cost(price, quantity, level):
 	bid_quantity = np.zeros((26, quantity.size))

@@ -1,7 +1,6 @@
 # You are given Price and Quantity array
 import numpy as np
 import operator
-from black_box import cost_one_battery_state_to_another
 
 
 
