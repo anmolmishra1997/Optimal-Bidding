@@ -26,7 +26,7 @@ def minimize_func(x):
 	x_value = x[0]
 	y_value = x[1]
 	minimize_variable = 0
-	for block in range(7,17):
+	for block in range(10):
 		quantity_train_pred = demand_train_pred[block] - solar_train_pred[block]
 		quantity_train = demand_train[block] - solar_train[block]
 
@@ -51,3 +51,32 @@ xopt, fopt = pso(minimize_func, lb, ub, swarmsize = 20, maxiter = 5, debug = Tru
 
 print( xopt)
 print(fopt)
+
+
+
+############################## LOAD TEST DATA ##################################
+'''
+block = 17
+demand_train = pd.read_csv('Demand_Train.csv', header=None).as_matrix()[50*block:50*(block+1), :]
+demand_train_pred = pd.read_csv('Demand_Train_pred.csv', header=None).as_matrix()[50*block:50*(block+1), :]
+solar_train = pd.read_csv('Solar_Train.csv', header=None).as_matrix()[50*block:50*(block+1), :]
+solar_train_pred = pd.read_csv('Solar_Train_pred.csv', header=None).as_matrix()[50*block:50*(block+1), :]
+price_train = pd.read_csv('Price_Train.csv', header=None).as_matrix()[50*block:50*(block+1), :]
+price_train_pred = pd.read_csv('Price_Train_pred.csv', header=None).as_matrix()[50*block:50*(block+1), :]
+
+quantity_train_pred = demand_train_pred - solar_train_pred
+quantity_final = np.zeros(quantity_train_pred.shape)
+
+for hour in range(24):
+	(mu, sigma_quantity) = norm.fit(quantity_train_pred[:, hour])
+	(mu, sigma_price) = norm.fit(price_train_pred[:, hour])
+	price_train_pred[:, hour] = price_train_pred[:, hour] + np.unravel_index(np.argmin(error_chart), (x_values.size, y_values.size))[0] * sigma_price
+	quantity_train_pred[:, hour] = quantity_train_pred[:, hour] + np.unravel_index(np.argmin(error_chart), (x_values.size, y_values.size))[1] * sigma_quantity
+
+	temp, quantity_final[:, hour] = black_box(price_train_pred, quantity_train_pred)
+
+temp, quantity_star = black_box(price_train_pred.ravel(), quantity_train_pred.ravel())
+
+print cost(demand_train, solar_train, price_train, quantity_star, price_train_pred)
+print cost(demand_train, solar_train, price_train, black_box(price_train_pred, demand_train - solar_train)[1], price_train)
+'''
