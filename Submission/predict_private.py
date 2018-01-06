@@ -1,5 +1,5 @@
 import numpy as np
-from scipy_optimize import charge_discharge
+#from scipy_optimize import charge_discharge
 import pandas as pd
 from another import black_box_quantity
 
@@ -51,9 +51,9 @@ x_values_discharging = np.array(x_values_discharging)
 '''
 
 
-demand_test_pred = pd.read_csv('Demand_LB_pred.csv', header=None).as_matrix()
-solar_test_pred = pd.read_csv('Solar_LB_pred.csv', header=None).as_matrix()
-price_test_pred = pd.read_csv('Price_LB_pred.csv', header=None).as_matrix()
+demand_test_pred = pd.read_csv('Demand_Test_pred.csv', header=None).as_matrix()
+solar_test_pred = pd.read_csv('Solar_Test_pred.csv', header=None).as_matrix()
+price_test_pred = pd.read_csv('Price_Test_pred.csv', header=None).as_matrix()
 
 bid_price = np.zeros(price_test_pred.shape)
 bid_quantity = np.zeros(price_test_pred.shape)
@@ -80,4 +80,4 @@ temp2 = np.reshape(bid_quantity, (np.product(bid_quantity.shape), 1))
 #temp2 = np.reshape(black_box(temp1.ravel(), temp2.ravel())[1], (np.product(bid_quantity.shape), 1))
 final = np.concatenate((temp1, temp2), axis=1)
 full_final = pd.DataFrame(final)
-full_final.to_csv('7zzz.csv', index=False)
+full_final.to_csv('7zzz.csv', index=False, header=False)
